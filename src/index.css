@@ -1,1 +1,9 @@
-﻿@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\nbody {\n  margin: 0;\n  font-family: Inter, sans-serif;\n  background: #f8fafc;\n}\n
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	margin: 0;
+	font-family: Inter, sans-serif;
+	background: #f8fafc;
+}

@@ -16,10 +16,16 @@ function SummaryPanel({ total, breakdown, currency = "USD", rate = null }) {
         </span>
       </div>
 
-      <div className="mb-6 overflow-hidden rounded-[1.5rem] bg-slate-950 p-5 text-white shadow-lg shadow-slate-950/10">
-        <p className="text-sm text-slate-300">Total Expenses</p>
-        <h3 className="mt-2 text-4xl font-black tracking-tight">{rate ? `${(totalValue * rate).toFixed(2)} ${currency}` : `$${totalValue.toFixed(2)}`}</h3>
-        <p className="mt-3 text-sm text-slate-400">Across {Object.keys(breakdown).length} tracked categories</p>
+      <div className="mb-6 grid gap-4 sm:grid-cols-2">
+        <div className="rounded-2xl bg-slate-900 p-5 text-white">
+          <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Total</p>
+          <h3 className="mt-2 text-3xl font-extrabold">{rate ? `${(totalValue * rate).toFixed(2)} ${currency}` : `$${totalValue.toFixed(2)}`}</h3>
+        </div>
+
+        <div className="rounded-2xl bg-slate-50 p-5">
+          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Categories Used</p>
+          <h3 className="mt-2 text-2xl font-semibold text-slate-900">{Object.keys(breakdown).length}</h3>
+        </div>
       </div>
 
       <div className="space-y-3">
@@ -27,22 +33,11 @@ function SummaryPanel({ total, breakdown, currency = "USD", rate = null }) {
           const percent = totalValue > 0 ? Math.round((value / totalValue) * 100) : 0;
 
           return (
-            <div key={category} className="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
+            <div key={category} className="rounded-2xl border border-slate-100 bg-white p-4">
               <div className="flex items-center justify-between gap-3 text-sm font-medium text-slate-700">
-                <span>{category}</span>
-                <span>{formatAmount(value, currency, rate)}</span>
+                <span className="text-base text-slate-900">{category}</span>
+                <span className="font-semibold text-slate-900">{formatAmount(value, currency, rate)}</span>
               </div>
-
-              <div className="mt-3 h-2 rounded-full bg-slate-200">
-                <div
-                  className="h-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"
-                  style={{ width: `${percent}%` }}
-                />
-              </div>
-
-              <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                {percent}% of total
-              </p>
             </div>
           );
         })}

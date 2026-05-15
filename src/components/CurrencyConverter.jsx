@@ -17,22 +17,24 @@ function CurrencyConverter({ currency, setCurrency, loading, error, rate, total 
         </div>
       </div>
 
-      <label className="grid gap-2 text-sm font-medium text-slate-700">
-        Target currency
-        <select
-          value={currency}
-          onChange={(e) => setCurrency(e.target.value)}
-          className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400 focus:bg-white focus:ring-4 focus:ring-emerald-100"
-        >
-          {currencies.map((cur) => (
-            <option key={cur} value={cur}>
-              {cur}
-            </option>
-          ))}
-        </select>
-      </label>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <label className="col-span-2 grid gap-2 text-sm font-medium text-slate-700">
+          Convert total to
+          <select value={currency} onChange={(e) => setCurrency(e.target.value)} className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none">
+            {currencies.map((cur) => (
+              <option key={cur} value={cur}>
+                {cur}
+              </option>
+            ))}
+          </select>
+        </label>
 
-      <div className="mt-5 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
+        <div className="col-span-1 flex items-center justify-end">
+          <div className="rounded-2xl bg-slate-50 px-4 py-2 text-sm text-slate-600">Base currency: USD</div>
+        </div>
+      </div>
+
+      <div className="mt-5 rounded-2xl border border-slate-100 bg-white p-4">
         {loading ? (
           <div className="flex items-center gap-3 text-slate-600">
             <Loader2 className="animate-spin" size={18} />
@@ -42,7 +44,7 @@ function CurrencyConverter({ currency, setCurrency, loading, error, rate, total 
           <div className="flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-rose-700">
             <AlertCircle size={18} className="mt-0.5 shrink-0" />
             <div>
-              <p className="font-semibold">Currency lookup failed</p>
+              <p className="font-semibold">Failed to fetch</p>
               <p className="mt-1 text-sm leading-6">{error}</p>
             </div>
           </div>

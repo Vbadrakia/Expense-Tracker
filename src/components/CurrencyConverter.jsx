@@ -1,73 +1,60 @@
-import {
-  Loader2,
-  AlertCircle,
-} from "lucide-react";
+import { AlertCircle, Loader2, Coins } from "lucide-react";
 
-const currencies = [
-  "USD",
-  "EUR",
-  "GBP",
-  "INR",
-  "AUD",
-  "CAD",
-];
+const currencies = ["USD", "EUR", "GBP", "INR", "AUD", "CAD"];
 
-function CurrencyConverter({
-  currency,
-  setCurrency,
-  loading,
-  error,
-  rate,
-  total,
-}) {
+function CurrencyConverter({ currency, setCurrency, loading, error, rate, total }) {
+  const convertedTotal = rate ? (total * rate).toFixed(2) : "0.00";
+
   return (
-    <div className="rounded-3xl bg-white p-6 shadow-sm">
+    <div className="rounded-[1.75rem] border border-white/70 bg-white p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] sm:p-7">
+      <div className="mb-6 flex items-center gap-3">
+        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/25">
+          <Coins size={20} />
+        </div>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">FX view</p>
+          <h2 className="text-xl font-bold text-slate-950">Currency Converter</h2>
+        </div>
+      </div>
 
-      <h2 className="mb-5 text-xl font-semibold">
-        Currency Converter
-      </h2>
+      <label className="grid gap-2 text-sm font-medium text-slate-700">
+        Target currency
+        <select
+          value={currency}
+          onChange={(e) => setCurrency(e.target.value)}
+          className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+        >
+          {currencies.map((cur) => (
+            <option key={cur} value={cur}>
+              {cur}
+            </option>
+          ))}
+        </select>
+      </label>
 
-      <select
-        value={currency}
-        onChange={(e) =>
-          setCurrency(e.target.value)
-        }
-        className="mb-5 w-full rounded-2xl border p-3 outline-none"
-      >
-        {currencies.map((cur) => (
-          <option
-            key={cur}
-            value={cur}
-          >
-            {cur}
-          </option>
-        ))}
-      </select>
-
-      <div className="rounded-2xl border p-5">
-
+      <div className="mt-5 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
         {loading ? (
-          <div className="flex items-center gap-2">
-            <Loader2 className="animate-spin" />
-            <span>Loading...</span>
+          <div className="flex items-center gap-3 text-slate-600">
+            <Loader2 className="animate-spin" size={18} />
+            <span className="text-sm font-medium">Refreshing exchange rate...</span>
           </div>
         ) : error ? (
-          <div className="flex items-center gap-2 text-red-500">
-            <AlertCircle />
-            <span>{error}</span>
+          <div className="flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-rose-700">
+            <AlertCircle size={18} className="mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold">Currency lookup failed</p>
+              <p className="mt-1 text-sm leading-6">{error}</p>
+            </div>
           </div>
         ) : (
           <>
-            <p className="text-slate-500">
-              1 USD = {rate?.toFixed(2)} {currency}
-            </p>
-
-            <h3 className="mt-3 text-3xl font-bold">
-              {(total * rate).toFixed(2)} {currency}
+            <p className="text-sm font-medium text-slate-500">1 USD = {rate?.toFixed(2)} {currency}</p>
+            <h3 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+              {convertedTotal} {currency}
             </h3>
+            <p className="mt-2 text-sm text-slate-500">Converted from your current total of ${total.toFixed(2)} USD.</p>
           </>
         )}
-
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 import SummaryPanel from "./components/SummaryPanel";
 import CurrencyConverter from "./components/CurrencyConverter";
+import Sidebar from "./components/Sidebar";
 
 const CATEGORIES = ["Food", "Travel", "Marketing", "Utilities", "Other"];
 
@@ -77,61 +78,45 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.16),_transparent_34%),linear-gradient(180deg,_#eff6ff_0%,_#f8fafc_44%,_#eef2ff_100%)] px-4 py-6 text-slate-900 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <header className="overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl space-y-4">
-              <span className="inline-flex w-fit items-center rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">
-                Expense dashboard
-              </span>
+    <div className="min-h-screen px-0 text-slate-900 sm:px-0 lg:px-0">
+      <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[18rem_1fr]">
+        <Sidebar />
 
-              <div className="space-y-3">
-                <h1 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
-                  Expense Tracker
-                </h1>
-                <p className="max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
-                  Track spending, compare categories, and convert totals with live FX rates in a clean dashboard.
-                </p>
+        <div className="px-4 py-6 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <header className="mb-6 flex items-center justify-between gap-4">
+              <div>
+                <h1 className="text-2xl font-extrabold tracking-tight text-slate-950">Expense Tracker</h1>
+                <p className="text-sm text-slate-500">Track spending, compare categories, convert totals.</p>
               </div>
-            </div>
 
-            <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[30rem] lg:flex-1">
-              <div className="rounded-3xl border border-slate-200 bg-slate-950 p-4 text-white shadow-lg shadow-slate-950/10">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Total spent</p>
-                <p className="mt-3 text-3xl font-black">{rateState.rate ? `${(total * rateState.rate).toFixed(2)} ${currency}` : `$${total.toFixed(2)}`}</p>
+              <div className="flex items-center gap-3">
+                <div className="hidden rounded-2xl bg-slate-100 px-3 py-2 text-sm text-slate-700 sm:block">Signed in as <strong>Vedant</strong></div>
+                <div className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold">{rateState.rate ? `${(total * rateState.rate).toFixed(2)} ${currency}` : `$${total.toFixed(2)}`}</div>
               </div>
-              <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Entries</p>
-                <p className="mt-3 text-3xl font-black text-slate-950">{expenses.length}</p>
-              </div>
-              <div className="rounded-3xl border border-blue-100 bg-blue-50 p-4 shadow-sm">
-                <p className="text-xs uppercase tracking-[0.2em] text-blue-700">Currencies</p>
-                <p className="mt-3 text-3xl font-black text-blue-950">6+</p>
-              </div>
-            </div>
+            </header>
+
+            <main className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+              <section className="space-y-6">
+                <ExpenseForm onAdd={addExpense} />
+                <ExpenseList expenses={expenses} onDelete={deleteExpense} currency={currency} rate={rateState.rate} />
+              </section>
+
+              <section className="space-y-6">
+                <SummaryPanel total={total} breakdown={breakdown} currency={currency} rate={rateState.rate} />
+
+                <CurrencyConverter
+                  currency={currency}
+                  setCurrency={setCurrency}
+                  loading={rateState.loading}
+                  error={rateState.error}
+                  rate={rateState.rate}
+                  total={total}
+                />
+              </section>
+            </main>
           </div>
-        </header>
-
-        <main className="mt-6 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-          <section className="space-y-6">
-            <ExpenseForm onAdd={addExpense} />
-            <ExpenseList expenses={expenses} onDelete={deleteExpense} currency={currency} rate={rateState.rate} />
-          </section>
-
-          <section className="space-y-6">
-            <SummaryPanel total={total} breakdown={breakdown} currency={currency} rate={rateState.rate} />
-
-            <CurrencyConverter
-              currency={currency}
-              setCurrency={setCurrency}
-              loading={rateState.loading}
-              error={rateState.error}
-              rate={rateState.rate}
-              total={total}
-            />
-          </section>
-        </main>
+        </div>
       </div>
     </div>
   );

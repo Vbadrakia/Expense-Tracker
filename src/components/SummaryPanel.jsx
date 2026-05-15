@@ -1,4 +1,6 @@
-function SummaryPanel({ total, breakdown }) {
+import { formatAmount } from "../utils/currency";
+
+function SummaryPanel({ total, breakdown, currency = "USD", rate = null }) {
   const totalValue = total || 0;
 
   return (
@@ -16,7 +18,7 @@ function SummaryPanel({ total, breakdown }) {
 
       <div className="mb-6 overflow-hidden rounded-[1.5rem] bg-slate-950 p-5 text-white shadow-lg shadow-slate-950/10">
         <p className="text-sm text-slate-300">Total Expenses</p>
-        <h3 className="mt-2 text-4xl font-black tracking-tight">${totalValue.toFixed(2)}</h3>
+        <h3 className="mt-2 text-4xl font-black tracking-tight">{rate ? `${(totalValue * rate).toFixed(2)} ${currency}` : `$${totalValue.toFixed(2)}`}</h3>
         <p className="mt-3 text-sm text-slate-400">Across {Object.keys(breakdown).length} tracked categories</p>
       </div>
 
@@ -28,7 +30,7 @@ function SummaryPanel({ total, breakdown }) {
             <div key={category} className="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
               <div className="flex items-center justify-between gap-3 text-sm font-medium text-slate-700">
                 <span>{category}</span>
-                <span>${value.toFixed(2)}</span>
+                <span>{formatAmount(value, currency, rate)}</span>
               </div>
 
               <div className="mt-3 h-2 rounded-full bg-slate-200">

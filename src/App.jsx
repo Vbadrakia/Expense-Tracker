@@ -99,7 +99,7 @@ function App() {
             <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[30rem] lg:flex-1">
               <div className="rounded-3xl border border-slate-200 bg-slate-950 p-4 text-white shadow-lg shadow-slate-950/10">
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Total spent</p>
-                <p className="mt-3 text-3xl font-black">${total.toFixed(2)}</p>
+                <p className="mt-3 text-3xl font-black">{rateState.rate ? `${(total * rateState.rate).toFixed(2)} ${currency}` : `$${total.toFixed(2)}`}</p>
               </div>
               <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Entries</p>
@@ -116,11 +116,11 @@ function App() {
         <main className="mt-6 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
           <section className="space-y-6">
             <ExpenseForm onAdd={addExpense} />
-            <ExpenseList expenses={expenses} onDelete={deleteExpense} />
+            <ExpenseList expenses={expenses} onDelete={deleteExpense} currency={currency} rate={rateState.rate} />
           </section>
 
           <section className="space-y-6">
-            <SummaryPanel total={total} breakdown={breakdown} />
+            <SummaryPanel total={total} breakdown={breakdown} currency={currency} rate={rateState.rate} />
 
             <CurrencyConverter
               currency={currency}

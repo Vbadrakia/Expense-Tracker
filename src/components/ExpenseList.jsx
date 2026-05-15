@@ -1,9 +1,12 @@
 import { Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { formatAmount } from "../utils/currency";
 
 function ExpenseList({
   expenses,
   onDelete,
+  currency = "USD",
+  rate = null,
 }) {
   return (
     <div className="rounded-[1.75rem] border border-white/70 bg-white p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] sm:p-7">
@@ -41,7 +44,7 @@ function ExpenseList({
               </div>
 
               <div className="flex items-center gap-3">
-                <p className="whitespace-nowrap text-lg font-bold text-slate-950">${Number(item.amount).toFixed(2)}</p>
+                <p className="whitespace-nowrap text-lg font-bold text-slate-950">{formatAmount(item.amount, currency, rate)}</p>
 
                 <button
                   onClick={() => onDelete(item.id)}

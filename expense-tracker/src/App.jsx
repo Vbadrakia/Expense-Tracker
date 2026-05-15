@@ -50,7 +50,7 @@ function App() {
 
       try {
         const res = await fetch(
-          `https://api.frankfurter.app/latest?from=USD&to=${currency}`
+          `https://open.er-api.com/v6/latest/USD`
         );
 
         if (!res.ok) {
@@ -58,6 +58,10 @@ function App() {
         }
 
         const data = await res.json();
+
+        if (data.result !== "success") {
+          throw new Error("Failed to fetch rate");
+        }
 
         setRateState({
           loading: false,

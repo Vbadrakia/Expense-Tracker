@@ -16,7 +16,7 @@ function SummaryPanel({ total, breakdown, currency = "USD", rate = null }) {
 
         <div className="rounded-2xl bg-slate-50 p-5">
           <p className="text-xs uppercase tracking-[0.22em] text-slate-500">Categories Used</p>
-          <h3 className="mt-2 text-2xl font-semibold text-slate-900">{categoriesUsed}</h3>
+          <h3 className="mt-2 text-3xl font-semibold text-slate-900">{categoriesUsed}</h3>
         </div>
       </div>
 

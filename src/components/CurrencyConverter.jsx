@@ -31,16 +31,16 @@ function CurrencyConverter({ currency, setCurrency, loading, error, rate, total 
         </div>
       </div>
 
-      <div className="mt-5 rounded-2xl border border-slate-100 bg-white p-4">
+      <div className={`mt-5 rounded-2xl border p-4 ${error ? 'border-rose-100 bg-white' : 'border-slate-100 bg-white'}`}>
         {loading ? (
           <div className="flex items-center gap-3 text-slate-600">
             <Loader2 className="animate-spin" size={18} />
             <span className="text-sm font-medium">Refreshing exchange rate...</span>
           </div>
         ) : error ? (
-          <div className="flex items-center gap-3 text-rose-600">
+          <div className="flex items-center gap-3 text-rose-500">
             <AlertCircle size={18} className="shrink-0" />
-            <p className="text-sm font-semibold">Failed to fetch</p>
+            <p className="text-sm font-medium">Failed to fetch</p>
           </div>
         ) : (
           <>

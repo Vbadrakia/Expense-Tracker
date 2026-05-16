@@ -33,13 +33,9 @@ function ExpenseForm({ onAdd }) {
 
   return (
     <div className="rounded-[1.25rem] border border-slate-100 bg-white p-6 shadow-sm sm:p-7">
-      <div className="mb-6 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white">
-          <Plus size={18} />
-        </div>
-        <div>
-          <h2 className="text-lg font-semibold text-slate-900">+ Add expense</h2>
-        </div>
+      <div className="mb-6 flex items-center gap-2">
+        <Plus size={20} className="text-slate-900" />
+        <h2 className="text-xl font-bold text-slate-900">Add expense</h2>
       </div>
 
       <form onSubmit={submit} className="grid gap-4">
